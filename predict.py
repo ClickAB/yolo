@@ -21,7 +21,7 @@ if __name__ == "__main__":
     #   'heatmap'           表示进行预测结果的热力图可视化，详情查看下方注释。
     #   'export_onnx'       表示将模型导出为onnx，需要pytorch1.7.1以上。
     #----------------------------------------------------------------------------------------------------------#
-    mode = "predict"
+    mode = "video"
     #-------------------------------------------------------------------------#
     #   crop                指定了是否在单张图片预测后对目标进行截取
     #   count               指定了是否进行目标的计数
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     #----------------------------------------------------------------------------------------------------------#
     video_path      = 0
     video_save_path = ""
-    video_fps       = 25.0
+    video_fps       = 40.0
     #----------------------------------------------------------------------------------------------------------#
     #   test_interval       用于指定测量fps的时候，图片检测的次数。理论上test_interval越大，fps越准确。
     #   fps_image_path      用于指定测试的fps图片
@@ -97,7 +97,8 @@ if __name__ == "__main__":
             fourcc  = cv2.VideoWriter_fourcc(*'XVID')
             size    = (int(capture.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
             out     = cv2.VideoWriter(video_save_path, fourcc, video_fps, size)
-
+        capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1024);
+        capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024);
         ref, frame = capture.read()
         if not ref:
             raise ValueError("未能正确读取摄像头（视频），请注意是否正确安装摄像头（是否正确填写视频路径）。")
